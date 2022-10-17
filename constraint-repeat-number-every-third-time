@@ -1,0 +1,28 @@
+// Code your testbench here
+// or browse Examples
+class A ;
+   rand bit [3:0] varr ;
+   int count; // make this static if you repeat constructing the class every time
+   constraint C {  
+                if ( ( count % 3 ) == 0 ) // Constraint Guard
+                   { varr == 5 ; }
+                else 
+                   { varr != 5 ; }
+   }	
+   function void post_randomize();
+      count++;
+   endfunction	
+endclass
+ 
+module Main;
+ 
+   A a1 ;
+ 
+   initial begin
+      a1 = new();
+      repeat(10)
+	if ( a1.randomize() )
+	  $display("Success with a1 == %p",a1);
+	else $error("randomize failed");
+   end
+endmodule : Main
