@@ -1,0 +1,41 @@
+// Code your testbench here
+// or browse Examples
+//wrte a pgm using dynamic array
+//array1: no of elements should be 20, elements btw 30-40
+//array2- sum of elements should be <100
+//array3 - sum of lements should be >100
+//array 4 size of array should not be same as array1,2,3
+
+class arrays;
+  rand int array1[$];
+  rand int  array2[$];
+  rand int array3[$];
+  rand int array4[$];
+  
+  constraint a1{array1.size==20; foreach(array1[i]) array1[i] inside{[30:40]};};
+  constraint a2{array2.sum <100; array3.sum>100;};
+  constraint a3{array2.size <15; array3.size<10; array4.size inside {[10:20]};};
+  constraint a4{array4.size!=(array1.size|| array2.size || array3.size);};
+                
+                function void display();
+                  $display("array1.size= %d, array2.size =%d ,array3.size= %d, array4.size =%d ",array1.size, array2.size,array3.size, array4.size);
+                  $display("array elements array1=%p", array1);
+                  $display("array elements array2=%p", array2);
+                  $display("array elements array3=%p", array3);
+                  $display("array elements array4=%p", array4);
+                  $display("array2.sum= %d, array3.sum=%d", array2.sum, array3.sum);
+                endfunction
+        
+  
+endclass
+               
+module tb;
+  arrays a;
+  initial begin
+       a=new();
+       repeat(3) begin
+          a.randomize();
+          a.display();
+       end
+  end
+endmodule
